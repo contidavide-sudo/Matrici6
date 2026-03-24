@@ -1,4 +1,6 @@
-﻿namespace Matrici6
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace Matrici6
 {
     internal class Program
     {
@@ -69,16 +71,70 @@
 
         static float[] Media(int[,] matrice)
         {
+            float [] medie = new float[matrice.GetLength(0)];
+            int cont = 0;
 
+            for (int i = 0; i < matrice.GetLength(0); i++)
+            {
+                cont = 0;
+
+                for (int j = 0; j < matrice.GetLength(1); j++)
+                {
+                    cont = cont + matrice[i, j];
+                }
+
+                medie[i] = cont / matrice.GetLength(0);
+            }
+
+            return medie;
+
+        }
+
+        static int[] Somma(int[,] matrice)
+        {
+            int[] somma = new int[matrice.GetLength(1)];
+            int cont = 0;
+
+            for (int i = 0; i < matrice.GetLength(1); i++)
+            {
+                cont = 0;
+
+                for (int j = 0; j < matrice.GetLength(0); j++)
+                {
+                    cont = cont + matrice[j, i];
+                }
+
+                somma[i] = cont;
+            }
+
+            return somma;
+        }
+
+        static int[,] SommaCelle(int[,] matrice)
+        {
+            for (int i = 0; i < matrice.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrice.GetLength(1); j++)
+                {
+                    if(i==0 && j==0)
+                    {
+                        matrice[i, j] = matrice[i + 1, j] + matrice[i, j + 1];
+                    }
+                }
+            }
         }
 
         static void Main(string[] args)
         {
+            //Es 1
+
             int[,] matrice = CreaMatrice();
 
             Stampa(matrice);
 
             Console.WriteLine();
+
+            //Es 2
 
             int[,] matrice2 = CreaMatEs2();
 
@@ -97,6 +153,26 @@
             int cont = Contatore(matrice2, x, y);
 
             Console.WriteLine(cont);
+
+            //Es 3
+
+            float[] med = Media(matrice2);
+
+            for (int i = 0;i < med.Length;i++)
+            {
+                Console.Write($"[{med[i]}]");
+            }
+
+            Console.WriteLine();
+
+            //Es 4
+
+            int[] somm = Somma(matrice2);
+
+            for (int i = 0; i < somm.Length; i++)
+            {
+                Console.Write($"[{somm[i]}]");
+            }
         }
     }
 }
